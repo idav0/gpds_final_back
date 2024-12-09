@@ -1,0 +1,23 @@
+version: '3.8'
+services:
+    db-mysql:
+        image: mysql:8.0
+        environment:
+            MYSQL_ROOT_PASSWORD: rootautos
+            MYSQL_DATABASE: autos-db
+            MYSQL_USER: autos
+            MYSQL_PASSWORD: autos2024
+    app:
+        build:
+            context: ./gpds-autos
+            dockerfile: Dockerfile
+        ports:
+            - 8080:8080
+        environment:
+            SPRING_DATASOURCE_URL: jdbc:mysql://db-mysql:3306/autos-db
+            SPRING_DATASOURCE_USERNAME: autos
+            SPRING_DATASOURCE_PASSWORD: autos2024
+            SPRING_JPA_HIBERNATE_DDL_AUTO: create
+        depends_on:
+            - db-mysql
+
